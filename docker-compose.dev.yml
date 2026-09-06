@@ -1,4 +1,4 @@
-# Development Postgres for the auth service.
+# Development services (Postgres for auth, Redis for the worker queues).
 # Start:  docker compose -f docker-compose.dev.yml up -d
 # Stop:   docker compose -f docker-compose.dev.yml down
 # Reset (deletes data): docker compose -f docker-compose.dev.yml down -v
@@ -21,5 +21,20 @@ services:
       timeout: 3s
       retries: 10
 
+  redis:
+    image: redis:8-alpine
+    container_name: superassistant-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
 volumes:
   superassistant_postgres_dev_data:
+  redis-data:

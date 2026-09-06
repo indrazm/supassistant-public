@@ -5,6 +5,7 @@ allowBuilds:
   "@prisma/engines": true
   esbuild: true
   prisma: true
+  msgpackr-extract: true
 minimumReleaseAgeExclude:
   - "@better-auth/core@1.7.3"
   - "@better-auth/drizzle-adapter@1.7.3"

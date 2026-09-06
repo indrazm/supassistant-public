@@ -25,6 +25,19 @@ Configuration via environment variables (see `apps/api/.env.example`).
 
 Workspace globs are defined in `pnpm-workspace.yaml`.
 
+### apps/worker
+
+BullMQ job worker backed by Redis.
+
+```sh
+docker compose -f docker-compose.dev.yml up -d   # start Redis
+pnpm worker:dev                            # dev worker with watch (loads .env)
+pnpm --filter @superassistant/worker build # typecheck (no emit; runs TS directly)
+pnpm --filter @superassistant/worker start # run via tsx
+```
+
+Configuration via environment variables (see `apps/worker/.env.example`).
+
 ## UI
 
 `packages/ui` — [shadcn/ui](https://ui.shadcn.com) (base-nova style, neutral base color) on Tailwind CSS v4.

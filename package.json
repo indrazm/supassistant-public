@@ -8,6 +8,7 @@
     "fmt": "oxfmt",
     "with-env": "dotenv -e .env --",
     "api:dev": "pnpm with-env pnpm --filter @superassistant/api dev",
+    "worker:dev": "pnpm with-env pnpm --filter @superassistant/worker dev",
     "runner-cli:run": "pnpm with-env pnpm --filter @superassistant/agents runner-cli:run",
     "fmt:check": "oxfmt --check"
   },
