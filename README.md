@@ -12,9 +12,9 @@ pnpm monorepo.
 Hono HTTP API.
 
 ```sh
-pnpm --filter @superassistant/api dev      # dev server with watch
-pnpm --filter @superassistant/api build    # compile to dist/
-pnpm --filter @superassistant/api start    # run compiled output
+pnpm api:dev                              # dev server with watch (loads .env)
+pnpm --filter @superassistant/api build   # typecheck (no emit; runs TS directly)
+pnpm --filter @superassistant/api start   # run via tsx
 ```
 
 Configuration via environment variables (see `apps/api/.env.example`).
