@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { authRouter } from "./modules/auth/router.js";
 
 export function createApp() {
   const app = new Hono();
@@ -11,6 +12,8 @@ export function createApp() {
   );
 
   app.get("/health", (c) => c.json({ status: "ok" }));
+
+  app.route("/api/auth", authRouter);
 
   return app;
 }
