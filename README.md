@@ -1,5 +1,10 @@
 # superassistant
 
+> [!WARNING]
+> **This is a demo — very far from production ready.** Expect breaking changes, hardcoded
+> dev defaults (e.g. `neo4j`/`devpassword`, no API auth on `/api/ingest`), placeholder
+> embeddings, and no hardening of any kind. Do not deploy any of this.
+
 pnpm monorepo.
 
 ## Structure
