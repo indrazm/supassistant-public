@@ -7,6 +7,18 @@ pnpm monorepo.
 - `apps/` — applications
 - `packages/` — shared packages
 
+### apps/api
+
+Hono HTTP API.
+
+```sh
+pnpm --filter @superassistant/api dev      # dev server with watch
+pnpm --filter @superassistant/api build    # compile to dist/
+pnpm --filter @superassistant/api start    # run compiled output
+```
+
+Configuration via environment variables (see `apps/api/.env.example`).
+
 Workspace globs are defined in `pnpm-workspace.yaml`.
 
 ## Tooling
