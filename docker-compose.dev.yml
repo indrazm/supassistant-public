@@ -1,4 +1,26 @@
+# Development services (Postgres for auth, Redis for the worker queues).
+# Start:  docker compose -f docker-compose.dev.yml up -d
+# Stop:   docker compose -f docker-compose.dev.yml down
+# Reset (deletes data): docker compose -f docker-compose.dev.yml down -v
+
 services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: superassistant-postgres-dev
+    environment:
+      POSTGRES_USER: superassistant
+      POSTGRES_PASSWORD: superassistant-dev
+      POSTGRES_DB: superassistant
+    ports:
+      - "54329:5432" # host 54329 -> container 5432 (avoids clashing with a local Postgres)
+    volumes:
+      - superassistant_postgres_dev_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U superassistant -d superassistant"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
   redis:
     image: redis:8-alpine
     container_name: superassistant-redis
@@ -14,4 +36,5 @@ services:
       retries: 10
 
 volumes:
+  superassistant_postgres_dev_data:
   redis-data:

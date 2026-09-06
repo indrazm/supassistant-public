@@ -2,6 +2,7 @@ import { agentToClientStream, parseClientStreamRequest } from "@anvia/client";
 import { createClientStreamResponse } from "@anvia/server";
 import { Hono } from "hono";
 import { createSuperAssistant } from "@superassistant/agents";
+import { authRouter } from "./modules/auth/router.js";
 
 export function createApp() {
   const app = new Hono();
@@ -36,6 +37,8 @@ export function createApp() {
 
     return createClientStreamResponse({ events });
   });
+
+  app.route("/api/auth", authRouter);
 
   return app;
 }
