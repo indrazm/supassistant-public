@@ -7,9 +7,17 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "runner-cli:run": "node src/runner-cli.ts"
+  },
+  "dependencies": {
+    "@anvia/core": "^1.1.1",
+    "@anvia/openai": "^1.1.1",
+    "exa-js": "^2.19.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
+    "@types/node": "^26.4.1",
     "typescript": "^7.0.2"
   }
 }

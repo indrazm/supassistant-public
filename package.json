@@ -6,9 +6,12 @@
   "scripts": {
     "lint": "oxlint",
     "fmt": "oxfmt",
+    "with-env": "dotenv -e .env --",
+    "runner-cli:run": "pnpm with-env pnpm --filter @superassistant/agents runner-cli:run",
     "fmt:check": "oxfmt --check"
   },
   "devDependencies": {
+    "dotenv-cli": "^11.0.0",
     "oxfmt": "^0.66.0",
     "oxlint": "^1.81.0"
   },
