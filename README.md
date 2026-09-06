@@ -9,12 +9,16 @@ pnpm monorepo.
 
 ### apps/api
 
-Hono HTTP API.
+Hono HTTP API with Better Auth (credentials) on Prisma + PostgreSQL.
 
 ```sh
-pnpm --filter @superassistant/api dev      # dev server with watch
-pnpm --filter @superassistant/api build    # compile to dist/
-pnpm --filter @superassistant/api start    # run compiled output
+docker compose -f docker-compose.dev.yml up -d        # Postgres on :54329
+cp apps/api/.env.example apps/api/.env                # set BETTER_AUTH_SECRET
+pnpm install
+pnpm --filter @superassistant/api db:push             # create auth tables
+pnpm --filter @superassistant/api dev                 # dev server with watch
+pnpm --filter @superassistant/api build               # compile to dist/
+pnpm --filter @superassistant/api start               # run compiled output
 ```
 
 Configuration via environment variables (see `apps/api/.env.example`).
