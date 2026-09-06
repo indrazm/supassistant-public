@@ -21,6 +21,24 @@ Configuration via environment variables (see `apps/api/.env.example`).
 
 Workspace globs are defined in `pnpm-workspace.yaml`.
 
+## UI
+
+`packages/ui` — [shadcn/ui](https://ui.shadcn.com) (base-nova style, neutral base color) on Tailwind CSS v4.
+
+```tsx
+import { Button } from "@superassistant/ui/components/button";
+import { useIsMobile } from "@superassistant/ui/hooks/use-mobile";
+import { cn } from "@superassistant/ui/lib/utils";
+```
+
+Import `@superassistant/ui/globals.css` once in your app entry for the theme tokens.
+
+Add components with:
+
+```sh
+pnpm dlx shadcn@latest add <component> -c packages/ui
+```
+
 ## Tooling
 
 Linting and formatting via [oxc](https://oxc.rs):
