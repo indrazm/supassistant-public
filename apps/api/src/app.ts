@@ -1,4 +1,7 @@
+import { agentToClientStream, parseClientStreamRequest } from "@anvia/client";
+import { createClientStreamResponse } from "@anvia/server";
 import { Hono } from "hono";
+import { createSuperAssistant } from "@superassistant/agents";
 import { authRouter } from "./modules/auth/router.js";
 
 export function createApp() {
@@ -12,6 +15,28 @@ export function createApp() {
   );
 
   app.get("/health", (c) => c.json({ status: "ok" }));
+
+  app.post("/api/chat", async (c) => {
+    let request;
+    try {
+      request = parseClientStreamRequest(await c.req.json());
+    } catch (error) {
+      return c.json(
+        { error: error instanceof Error ? error.message : "Invalid request body." },
+        400,
+      );
+    }
+
+    if (request.type !== "messages") {
+      return c.json({ error: "This endpoint accepts messages requests only." }, 400);
+    }
+
+    const events = agentToClientStream({
+      events: createSuperAssistant().stream({ messages: request.messages }),
+    });
+
+    return createClientStreamResponse({ events });
+  });
 
   app.route("/api/auth", authRouter);
 

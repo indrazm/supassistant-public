@@ -3,7 +3,7 @@ import { OpenAIClient } from "@anvia/openai";
 import { instructions } from "./prompt.ts";
 import { searchWeb } from "./tools/search-web.ts";
 
-export async function runAgent(prompt: string): Promise<AgentOutcome> {
+export function createSuperAssistant(): Agent {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     throw new Error("OPENAI_API_KEY is not set");
@@ -18,7 +18,7 @@ export async function runAgent(prompt: string): Promise<AgentOutcome> {
     api: "chat",
   });
 
-  const agent = new Agent({
+  return new Agent({
     id: "superassistant",
     name: "SuperAssistant",
     description: "Discord super assistant",
@@ -26,6 +26,8 @@ export async function runAgent(prompt: string): Promise<AgentOutcome> {
     model,
     tools: [searchWeb],
   });
+}
 
-  return agent.generate({ prompt });
+export async function runAgent(prompt: string): Promise<AgentOutcome> {
+  return createSuperAssistant().generate({ prompt });
 }

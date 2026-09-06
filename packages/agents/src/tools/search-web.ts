@@ -14,13 +14,7 @@ export const searchWeb = createTool({
     "Search the web with Exa. Returns a list of results with title, url, and publish date.",
   inputSchema: z.object({
     query: z.string().describe("The search query"),
-    numResults: z
-      .number()
-      .int()
-      .min(1)
-      .max(10)
-      .default(5)
-      .describe("How many results to return"),
+    numResults: z.number().int().min(1).max(10).default(5).describe("How many results to return"),
   }),
   execute: async ({ query, numResults }) => {
     const response = await exa.search(query, { numResults, contents: false });

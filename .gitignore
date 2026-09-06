@@ -2,3 +2,4 @@ node_modules
 dist
 .env
 apps/api/src/generated
+.lens/
