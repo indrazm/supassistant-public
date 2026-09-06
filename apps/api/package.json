@@ -21,8 +21,11 @@
     "@prisma/adapter-pg": "^7.10.0",
     "@prisma/client": "^7.10.0",
     "@superassistant/agents": "workspace:*",
+    "@superassistant/queue": "workspace:*",
     "better-auth": "^1.7.3",
+    "bullmq": "^5.81.4",
     "hono": "^4.13.7",
+    "ioredis": "^5.8.2",
     "zod": "^4.5.4"
   },
   "devDependencies": {

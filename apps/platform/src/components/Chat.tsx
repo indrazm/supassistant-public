@@ -6,6 +6,7 @@ import {
   MessagePrimitive,
   ThreadPrimitive,
 } from "@anvia/react-ui";
+import { IngestDocumentButton } from "./IngestDocument";
 
 const transport = createHttpClientTransport({ endpoint: "/api/chat" });
 
@@ -17,7 +18,10 @@ export function Chat() {
   return (
     <ChatProvider controller={chat}>
       <main className="chat">
-        <header className="chat-header">SuperAssistant</header>
+        <header className="chat-header">
+          <span className="chat-title">SuperAssistant</span>
+          <IngestDocumentButton />
+        </header>
         <ThreadPrimitive.Root className="chat-thread">
           <ThreadPrimitive.Viewport className="chat-viewport">
             <ThreadPrimitive.Empty>

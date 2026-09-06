@@ -27,14 +27,23 @@ Workspace globs are defined in `pnpm-workspace.yaml`.
 
 ### apps/worker
 
-BullMQ job worker backed by Redis.
+BullMQ job worker (URL document ingestion into Neo4j graph + Qdrant vectors).
 
 ```sh
-docker compose -f docker-compose.dev.yml up -d   # start Redis
+docker compose -f docker-compose.dev.yml up -d   # start dev infra (Redis, Neo4j, Qdrant)
 pnpm worker:dev                            # dev worker with watch (loads .env)
 pnpm --filter @superassistant/worker build # typecheck (no emit; runs TS directly)
 pnpm --filter @superassistant/worker start # run via tsx
 ```
+
+Documents are ingested via `POST /api/ingest {url}` (or the "Ingest document" button in
+the platform UI). The worker fetches the page, extracts graph facts with an LLM, embeds
+chunks, and writes to both stores via `@anvia/graph` (`ingestGraphTextToStores`).
+pnpm worker:dev # dev worker with watch (loads .env)
+pnpm --filter @superassistant/worker build # typecheck (no emit; runs TS directly)
+pnpm --filter @superassistant/worker start # run via tsx
+
+````
 
 Configuration via environment variables (see `apps/worker/.env.example`).
 
@@ -46,7 +55,7 @@ Configuration via environment variables (see `apps/worker/.env.example`).
 import { Button } from "@superassistant/ui/components/button";
 import { useIsMobile } from "@superassistant/ui/hooks/use-mobile";
 import { cn } from "@superassistant/ui/lib/utils";
-```
+````
 
 Import `@superassistant/ui/globals.css` once in your app entry for the theme tokens.
 

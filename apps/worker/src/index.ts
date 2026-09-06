@@ -1,6 +1,8 @@
 import { Worker } from "bullmq";
 import { Redis } from "ioredis";
+import { ingestQueueName } from "@superassistant/queue";
 import { env } from "./env.js";
+import { openIngestion } from "./ingest.js";
 import { processJob } from "./processor.js";
 
 try {
@@ -9,11 +11,12 @@ try {
   // No .env file present — fall back to the process environment.
 }
 
-const queueName = "default";
-
 const connection = new Redis(env.redisUrl, { maxRetriesPerRequest: null });
 
-const worker = new Worker(queueName, processJob, { connection });
+// Fails fast when neo4j/qdrant are unreachable; start them via docker compose first.
+const ingestion = await openIngestion();
+
+const worker = new Worker(ingestQueueName, (job) => processJob(job, ingestion), { connection });
 
 worker.on("completed", (job) => {
   console.log(`[worker] completed job ${job.id ?? "?"} (${job.name})`);
@@ -27,11 +30,12 @@ worker.on("error", (error) => {
   console.error("[worker] error:", error);
 });
 
-console.log(`[worker] ready — queue "${queueName}" on ${env.redisUrl}`);
+console.log(`[worker] ready — queue "${ingestQueueName}" on ${env.redisUrl}`);
 
 for (const signal of ["SIGINT", "SIGTERM"] as const) {
   process.on(signal, async () => {
     await worker.close();
+    await ingestion.close();
     connection.disconnect();
     process.exit(0);
   });

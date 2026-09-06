@@ -35,6 +35,33 @@ services:
       timeout: 3s
       retries: 10
 
+  neo4j:
+    image: neo4j:2026.01
+    container_name: superassistant-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/devpassword
+    ports:
+      - "127.0.0.1:7474:7474"
+      - "127.0.0.1:7687:7687"
+    volumes:
+      - neo4j-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 | grep -q neo4j || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  qdrant:
+    image: qdrant/qdrant:v1.19.1
+    container_name: superassistant-qdrant
+    ports:
+      - "127.0.0.1:6333:6333"
+      - "127.0.0.1:6334:6334"
+    volumes:
+      - qdrant-data:/qdrant/storage
+
 volumes:
   superassistant_postgres_dev_data:
   redis-data:
+  neo4j-data:
+  qdrant-data:

@@ -10,8 +10,16 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@anvia/core": "1.1.1",
+    "@anvia/graph": "1.1.1",
+    "@anvia/neo4j": "1.1.1",
+    "@anvia/openai": "1.1.1",
+    "@anvia/qdrant": "1.1.1",
+    "@qdrant/js-client-rest": "^1.15.1",
+    "@superassistant/queue": "workspace:*",
     "bullmq": "^5.63.0",
-    "ioredis": "^5.8.2"
+    "ioredis": "^5.8.2",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^26.4.1",

@@ -29,4 +29,9 @@ export const env = {
   get webOrigin(): string {
     return process.env.WEB_ORIGIN ?? "http://localhost:5173";
   },
+
+  get redisUrl(): string {
+    const url = process.env.REDIS_URL;
+    return url && url.length > 0 ? url : "redis://127.0.0.1:6379";
+  },
 };
